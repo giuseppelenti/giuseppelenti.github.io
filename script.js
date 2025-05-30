@@ -102,31 +102,31 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("resize", updateActiveNav);
     updateActiveNav();
 
-    // Invio del form di contatto tramite emailjs
-    let contactButton = document.querySelector("#contact-form button[type='button']");
-    contactButton.addEventListener("click", function() {
-        let email = document.getElementById("email");
-        let message = document.getElementById("form-message");
-        let form = document.getElementById("contact-form");
+document.getElementById("send-button").addEventListener("click", function () {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const message = document.getElementById("message").value;
 
-        if (!email || !message || !form) {
-            console.error("Form elements not found!");
-            return;
-        }
+  if (!name || !email || !message) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-        let formData = {
-            email: email.value,
-            message: message.value
-        };
+  const formData = {
+    name: name,
+    email: email,
+    message: message
+  };
 
-        emailjs.send("service_h4su60f", "template_55pkhe8", formData)
-            .then(() => {
-                alert("Email successfully sent!");
-                form.reset();
-            })
-            .catch(error => {
-                console.error("Error sending the email:", error);
-                alert("Email non inviata. Riprova.");
-            });
+  emailjs.send("service_h4su60f", "template_55pkhe8", formData)
+    .then(() => {
+      alert("Email successfully sent!");
+      document.getElementById("contact-form").reset();
+    })
+    .catch(error => {
+      console.error("Error sending the email:", error);
+      alert("Email not sent. Try again.");
     });
+});
+
 });
